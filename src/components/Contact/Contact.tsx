@@ -1,4 +1,3 @@
-import styles from './Contact.module.css'
 
 type Props = {
   name: string
@@ -8,12 +7,15 @@ type Props = {
 
 export const Contact = ({ name, email, phone }: Props) => {
   return (
-    <div>
-      <h4 className={styles.title}>{name}</h4>
-      <ul>
-        <li>Email: {email}</li>
-        <li>Phone: {phone}</li>
-      </ul>
+    <div className="collapse collapse-arrow border border-base-300 bg-base-200 my-4">
+      <input type="checkbox" />
+      <div className="collapse-title text-xl font-medium">{name}</div>
+      <div className="collapse-content">
+        <ul>
+          <li>Email: {email}</li>
+          <li>Phone: {phone}</li>
+        </ul>
+      </div>
     </div>
   )
 }
