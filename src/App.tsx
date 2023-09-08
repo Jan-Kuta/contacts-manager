@@ -1,9 +1,10 @@
 import { Contact } from './components/Contact'
+import { Heading } from './components/Heading'
 
 function App() {
   return (
     <div>
-      <h1>Contacts manager</h1>
+      <Heading text="Contacts manager" />
       <Contact />
     </div>
   )
