@@ -1,10 +1,10 @@
 import { TextInput } from './TextInput'
-import { ContactType } from '../ContactList/ContactList'
+import { ContactTypeWithVoluntaryId } from '../ContactList/ContactList'
 import { useState } from 'react'
 
 type Props = {
-  initialContactValue: ContactType
-  onSave: (contact: ContactType) => void
+  initialContactValue: ContactTypeWithVoluntaryId
+  onSave: (contact: ContactTypeWithVoluntaryId) => void
   onCancel: () => void
 }
 
@@ -16,21 +16,24 @@ export const ContactForm = ({ initialContactValue, onSave, onCancel } : Props) =
     setContact({ ...contact, [name]: value });
   };
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault()
     onSave(contact)
   }
 
   return (
-    <form className="space-y-6">
+    <form className="space-y-6" onSubmit={handleSave}>
       <TextInput label="Name" name="name" value={contact.name} onChange={handleInputChange} />
       <TextInput label="Email" name="email" value={contact.email} onChange={handleInputChange} />
       <TextInput label="Phone" name="phone" value={contact.phone} onChange={handleInputChange} />
-      <button type="button" onClick={handleSave}>
-        Save
-      </button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
+      <div className="modal-action">
+        <button type="submit" className="btn btn-primary" onClick={handleSave}>
+          Save
+        </button>
+        <button className="btn btn-secondary" onClick={onCancel}>
+          Cancel
+        </button>
+      </div>
     </form>
   )
 }
