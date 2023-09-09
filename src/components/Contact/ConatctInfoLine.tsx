@@ -1,3 +1,5 @@
+import { UserMessageContext } from '../../contexts/UserMessage'
+import { useContext } from 'react'
 
 type Props = {
   value: string
@@ -5,14 +7,15 @@ type Props = {
 }
 
 export const ConatctInfoLine = ({ value, icon }: Props) => {
+  const { setMessage } = useContext(UserMessageContext)
   // coppy value to clipboard
   const copyToClipboard = () => {
     navigator.clipboard.writeText(value)
       .then(() => {
-        alert('Value copied to clipboard')
+        setMessage('Value copied to clipboard')
       })
       .catch(() => {
-        alert('Value failed to copy to clipboard')
+        setMessage('Value failed to copy to clipboard', 'error')
       })
   }
 
