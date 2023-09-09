@@ -22,7 +22,7 @@ export const ContactList = () => {
   const deleteContact = (id: number) => async () => {
     await deleteUser(id)
     // remove contact from global state / Context
-    setContacts(contacts.filter(contact => contact.id !== id))
+    setContacts(contacts.filter((contact: ContactType) => contact.id !== id))
     setMessage('Contact deleted successfully')
   }
 
@@ -41,7 +41,7 @@ export const ContactList = () => {
       updateUser(contact as ContactType)
         .then(() => {
           // update contact in global state / Context
-          setContacts(contacts.map(c => c.id === contact.id ? contact : c))
+          setContacts(contacts.map((c: ContactType) => c.id === contact?.id ? contact as ContactType : c))
           setEditingContact(undefined)
           setMessage('Contact updated successfully')
         })
@@ -49,7 +49,7 @@ export const ContactList = () => {
   }
 
   const selectContact = (id: number) => () => {
-    setEditingContact(contacts.find(contact => contact.id === id))
+    setEditingContact(contacts.find((contact: ContactType) => contact.id === id))
   }
 
   const createContact = () => {
@@ -64,7 +64,7 @@ export const ContactList = () => {
         </div>
       </dialog>
 
-      {contacts.map(contact => (
+      {contacts.map((contact: ContactType) => (
         <Contact key={contact.id} selectContact={selectContact(contact.id)} deleteContact={deleteContact(contact.id)} {...contact} />
       ))}
 

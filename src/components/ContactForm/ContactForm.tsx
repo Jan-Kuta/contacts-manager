@@ -11,12 +11,12 @@ type Props = {
 export const ContactForm = ({ initialContactValue, onSave, onCancel } : Props) => {
   const [contact, setContact] = useState(initialContactValue)
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setContact({ ...contact, [name]: value });
   };
 
-  const handleSave = (e) => {
+  const handleSave = (e: React.FormEvent) => {
     e.preventDefault()
     onSave(contact)
   }

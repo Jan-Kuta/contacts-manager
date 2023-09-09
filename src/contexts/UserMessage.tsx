@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 
 type MessageType = 'ok' | 'error'
 
@@ -13,9 +13,9 @@ type UserMessageContextType = {
   message: UserMessage | undefined
 }
 
-const UserMessageContext = createContext<UserMessageContextType | undefined>(undefined);
+const UserMessageContext = createContext<UserMessageContextType>({ setMessage: () => {}, message: undefined });
 
-function UserMessageProvider({ children }) {
+function UserMessageProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState<UserMessage | undefined>(undefined);
 
   const setMessage = useCallback((text?: string, type: MessageType = 'ok') => {
