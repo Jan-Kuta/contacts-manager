@@ -1,3 +1,4 @@
+import { ContactInfo } from './ContactInfo'
 
 type Props = {
   name: string
@@ -11,10 +12,7 @@ export const Contact = ({ name, email, phone }: Props) => {
       <input type="checkbox" />
       <div className="collapse-title text-xl font-medium">{name}</div>
       <div className="collapse-content">
-        <ul>
-          <li>Email: {email}</li>
-          <li>Phone: {phone}</li>
-        </ul>
+        <ContactInfo email={email} phone={phone} />
       </div>
     </div>
   )
