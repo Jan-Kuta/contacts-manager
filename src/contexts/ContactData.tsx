@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { ContactType } from '../components/ContactList/ContactList'
+import { getUsers } from '../api/users'
 
 const ContactDataContext = createContext({contacts: [], setContacts: (data: ContactType[]) => {}});
 
@@ -8,7 +9,7 @@ function ContactDataProvider({ children }) {
 
   // called once when the component is mounted
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
+    getUsers()
       .then(response => response.json())
       .then(data => setData(data))
   }, [])

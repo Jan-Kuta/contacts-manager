@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { Contact } from '../Contact'
 import { ContactDataContext } from '../../contexts/ContactData'
 import { ContactForm } from '../ContactForm/ContactForm'
+import { createUser, deleteUser, updateUser } from '../../api/users'
 
 export type ContactType = {
   id: number
@@ -17,9 +18,7 @@ export const ContactList = () => {
   const [editingContact, setEditingContact] = useState<ContactType | undefined>(undefined)
 
   const deleteContact = (id: number) => () => {
-    fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-      method: 'DELETE'
-    })
+    deleteUser(id)
       .then(() => {
         // remove contact from global state / Context
         setContacts(contacts.filter(contact => contact.id !== id))
@@ -28,35 +27,24 @@ export const ContactList = () => {
 
   const saveContact = (contact: ContactTypeWithVoluntaryId) => {
     if (contact.id === undefined) {
-      fetch('https://jsonplaceholder.typicode.com/users', {
-        method: 'POST',
-        body: JSON.stringify(contact),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      })
+      createUser(contact)
         .then(response => response.json())
         .then(newContact => {
           // add contact to global state / Context
           setContacts([...contacts, newContact])
           setEditingContact(undefined)
         })
-      return
-    }
+    } else {
 
-    fetch(`https://jsonplaceholder.typicode.com/users/${contact.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(contact),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
-      .then(() => {
-        // update contact in global state / Context
-        setContacts(contacts.map(c => c.id === contact.id ? contact : c))
-        setEditingContact(undefined)
-      })
+      updateUser(contact as ContactType)
+        .then(() => {
+          // update contact in global state / Context
+          setContacts(contacts.map(c => c.id === contact.id ? contact : c))
+          setEditingContact(undefined)
+        })
+    }
   }
+
   const selectContact = (id: number) => () => {
     setEditingContact(contacts.find(contact => contact.id === id))
   }
