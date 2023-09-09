@@ -10,12 +10,22 @@ export type ContactType = {
 }
 
 export const ContactList = () => {
-  const { contacts } = useContext(ContactDataContext)
+  const { contacts, setContacts } = useContext(ContactDataContext)
+
+  const deleteContact = (id: number) => () => {
+    fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+      method: 'DELETE'
+    })
+      .then(() => {
+        // remove contact from global state / Context
+        setContacts(contacts.filter(contact => contact.id !== id))
+      })
+  }
 
   return (
     <>
       {contacts.map(contact => (
-        <Contact key={contact.id} {...contact} />
+        <Contact key={contact.id} deleteContact={deleteContact(contact.id)} {...contact} />
       ))}
     </>
   )
