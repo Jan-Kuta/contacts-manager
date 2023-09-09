@@ -3,6 +3,7 @@ import { Contact } from '../Contact'
 import { ContactDataContext } from '../../contexts/ContactData'
 import { ContactForm } from '../ContactForm/ContactForm'
 import { createUser, deleteUser, updateUser } from '../../api/users'
+import { UserMessageContext } from '../../contexts/UserMessage'
 
 export type ContactType = {
   id: number
@@ -14,6 +15,7 @@ export type ContactType = {
 export type ContactTypeWithVoluntaryId = Omit<ContactType, 'id'> & { id?: number }
 
 export const ContactList = () => {
+  const { setMessage } = useContext(UserMessageContext)
   const { contacts, setContacts } = useContext(ContactDataContext)
   const [editingContact, setEditingContact] = useState<ContactTypeWithVoluntaryId | undefined>(undefined)
 
@@ -21,6 +23,7 @@ export const ContactList = () => {
     await deleteUser(id)
     // remove contact from global state / Context
     setContacts(contacts.filter(contact => contact.id !== id))
+    setMessage('Contact deleted successfully')
   }
 
   const saveContact = (contact: ContactTypeWithVoluntaryId) => {
@@ -31,6 +34,7 @@ export const ContactList = () => {
           // add contact to global state / Context
           setContacts([...contacts, newContact])
           setEditingContact(undefined)
+          setMessage('Contact created successfully')
         })
     } else {
 
@@ -39,6 +43,7 @@ export const ContactList = () => {
           // update contact in global state / Context
           setContacts(contacts.map(c => c.id === contact.id ? contact : c))
           setEditingContact(undefined)
+          setMessage('Contact updated successfully')
         })
     }
   }
