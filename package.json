@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://Jan-Kuta.github.io/contacts-manager",
+  "homepage": "https://jan-kuta.github.io/contacts-manager",
   "scripts": {
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist",
