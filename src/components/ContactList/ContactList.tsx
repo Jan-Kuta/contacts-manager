@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { Contact } from '../Contact'
+import { ContactDataContext } from '../../contexts/ContactData'
 
-type ContactType = {
+export type ContactType = {
   id: number
   name: string
   email: string
@@ -9,14 +10,7 @@ type ContactType = {
 }
 
 export const ContactList = () => {
-  const [contacts, setContacts] = useState<ContactType[]>([])
-
-  // called once when the component is mounted
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(response => response.json())
-      .then(data => setContacts(data))
-  }, [])
+  const { contacts } = useContext(ContactDataContext)
 
   return (
     <>
