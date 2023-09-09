@@ -15,7 +15,7 @@ export type ContactTypeWithVoluntaryId = Omit<ContactType, 'id'> & { id?: number
 
 export const ContactList = () => {
   const { contacts, setContacts } = useContext(ContactDataContext)
-  const [editingContact, setEditingContact] = useState<ContactType | undefined>(undefined)
+  const [editingContact, setEditingContact] = useState<ContactTypeWithVoluntaryId | undefined>(undefined)
 
   const deleteContact = (id: number) => () => {
     deleteUser(id)
@@ -49,6 +49,10 @@ export const ContactList = () => {
     setEditingContact(contacts.find(contact => contact.id === id))
   }
 
+  const createContact = () => {
+    setEditingContact({ name: '', email: '', phone: '' })
+  }
+
   return (
     <>
       <dialog className="modal z-10" open={editingContact !== undefined}>
@@ -60,6 +64,14 @@ export const ContactList = () => {
       {contacts.map(contact => (
         <Contact key={contact.id} selectContact={selectContact(contact.id)} deleteContact={deleteContact(contact.id)} {...contact} />
       ))}
+
+      <button onClick={createContact} className={`btn btn-lg btn-circle btn-primary  fixed bottom-4 right-4`}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+          <path fillRule="evenodd"
+                d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
+                clipRule="evenodd"/>
+        </svg>
+      </button>
     </>
   )
 }

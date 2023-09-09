@@ -9,7 +9,7 @@ function App() {
   return (
     <UserMessageProvider>
       <ContactDataProvider>
-        <div className="my-container relative">
+        <div className="my-container relative mb-40">
           <UserMessage />
           <Heading text="Contacts manager" />
           <ContactList />
