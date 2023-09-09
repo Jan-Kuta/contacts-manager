@@ -17,12 +17,10 @@ export const ContactList = () => {
   const { contacts, setContacts } = useContext(ContactDataContext)
   const [editingContact, setEditingContact] = useState<ContactTypeWithVoluntaryId | undefined>(undefined)
 
-  const deleteContact = (id: number) => () => {
-    deleteUser(id)
-      .then(() => {
-        // remove contact from global state / Context
-        setContacts(contacts.filter(contact => contact.id !== id))
-      })
+  const deleteContact = (id: number) => async () => {
+    await deleteUser(id)
+    // remove contact from global state / Context
+    setContacts(contacts.filter(contact => contact.id !== id))
   }
 
   const saveContact = (contact: ContactTypeWithVoluntaryId) => {
